@@ -22,7 +22,7 @@ public class TodoController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity completeTodo(@RequestParam Long id) {
         try{
             return ResponseEntity.ok(todoService.completeTodo(id));
