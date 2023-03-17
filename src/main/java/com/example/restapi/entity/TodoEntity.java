@@ -3,6 +3,8 @@ package com.example.restapi.entity;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
+
 @Table(name = "todos")
 @Entity
 public class TodoEntity {
@@ -12,7 +14,7 @@ public class TodoEntity {
     private String title;
     private Boolean completed;
     @ManyToMany(mappedBy = "todos", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<UserEntity> users;
+    private Set<UserEntity> users;
 
     public TodoEntity() {
     }
@@ -41,11 +43,11 @@ public class TodoEntity {
         this.completed = completed;
     }
 
-    public List<UserEntity> getUsers() {
+    public Set<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(List<UserEntity> users) {
+    public void setUsers(Set<UserEntity> users) {
         this.users = users;
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity registration(@RequestBody UserEntity userEntity) {
         try {
             userService.registration(userEntity);
@@ -34,7 +34,7 @@ public class UserController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity getOneUsers(@RequestParam Long id) {
+    public ResponseEntity getOneUsers(@RequestParam("id") Long id) {
         try {
             return ResponseEntity.ok(userService.getOne(id));
         } catch (UserNotFoundException e) {

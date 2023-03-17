@@ -13,10 +13,10 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @PostMapping
-    public ResponseEntity createTodo(@RequestBody TodoEntity todo, @RequestParam Long userId) {
+    @PostMapping("/{userId}")
+    public ResponseEntity createTodo(@RequestParam("userId") Long userId, @RequestBody TodoEntity todoEntity) {
         try{
-            return ResponseEntity.ok(todoService.createTodo(todo, userId));
+            return ResponseEntity.ok(todoService.createTodo(todoEntity, userId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка!");
         }
@@ -30,4 +30,5 @@ public class TodoController {
             return ResponseEntity.badRequest().body("Произошла ошибка!");
         }
     }
+
 }
