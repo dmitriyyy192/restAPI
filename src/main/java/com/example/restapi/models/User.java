@@ -26,7 +26,9 @@ public class User {
         return model;
     }
 
-    public User() {}
+    public User() {
+
+    }
 
     public Long getId() {
         return id;

@@ -17,6 +17,8 @@ public class TodoService {
     private UserRepository userRepository;
 
     public Todo createTodo(TodoEntity todo, Long userID) {
+        UserEntity user = userRepository.findById(userID).get();
+        todo.setUser(user);
         return Todo.toModel(todoRepository.save(todo));
     }
 

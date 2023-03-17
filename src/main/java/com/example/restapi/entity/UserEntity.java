@@ -3,9 +3,7 @@ package com.example.restapi.entity;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Set;
 
-@Table(name = "users")
 @Entity //чтобы jpa сделал из этой сущности таблицу
 public class UserEntity {
     @Id
@@ -14,23 +12,19 @@ public class UserEntity {
 
     private String username;
     private String password;
-    @JoinTable(
-            name = "user_todo",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "todo_id")}
-    )
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<TodoEntity> todos;
 
-    public UserEntity() {
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    List<TodoEntity> todos;
 
-    public Set<TodoEntity> getTodos() {
+    public List<TodoEntity> getTodos() {
         return todos;
     }
 
-    public void setTodos(Set<TodoEntity> todos) {
+    public void setTodos(List<TodoEntity> todos) {
         this.todos = todos;
+    }
+
+    public UserEntity() {
     }
 
     public String getUsername() {
