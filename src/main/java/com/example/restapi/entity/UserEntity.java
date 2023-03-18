@@ -13,6 +13,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //генерируется уникальное значение id
     private Long id;
 
+
     private String username;
     private String password;
     @JoinTable(
@@ -20,7 +21,7 @@ public class UserEntity {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "todo_id")}
     )
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<TodoEntity> todos = new ArrayList<>();
 
     public UserEntity() {

@@ -15,7 +15,7 @@ public class TodoEntity {
     private String title;
     private Boolean completed;
 
-    @ManyToMany(mappedBy = "todos", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "todos", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<UserEntity> users = new ArrayList<>();
 
     public TodoEntity() {

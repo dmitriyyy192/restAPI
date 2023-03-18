@@ -22,20 +22,41 @@ public class TodoController {
         }
     }
     @PostMapping()
-    public ResponseEntity createTodo(@RequestParam(name = "userId") Long userId, @RequestBody TodoEntity todoEntity) {
+    public ResponseEntity addUserToExistingTodo(@RequestParam Long userId, @RequestParam Long todo) {
+        try{
+            return ResponseEntity.ok().body(todoService.addUserToExistingTodo(userId, todo));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Произошла ошибка!");
+        }
+    }
+    @GetMapping("/{id}/users")
+    public ResponseEntity getUsersByTodoID(@PathVariable Long id) {
+        try{
+            return ResponseEntity.ok().body(todoService.getUsersByTodoID(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Произошла ошибка!");
+        }
+    }
+    @PostMapping("/{userId}")
+    public ResponseEntity createTodo(@PathVariable Long userId, @RequestBody TodoEntity todoEntity) {
         try{
             return ResponseEntity.ok(todoService.createTodo(todoEntity, userId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка!");
         }
     }
-
-
-
-    @PutMapping()
-    public ResponseEntity completeTodo(@RequestParam(name = "id") Long id) {
+    @PutMapping("/{id}")
+    public ResponseEntity completeTodo(@PathVariable Long id) {
         try{
             return ResponseEntity.ok(todoService.completeTodo(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Произошла ошибка!");
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteTodoById(@PathVariable Long id) {
+        try{
+            return ResponseEntity.ok(todoService.deleteTodoById(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка!");
         }

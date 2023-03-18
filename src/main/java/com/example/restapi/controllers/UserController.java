@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @PostMapping("/")
     public ResponseEntity registration(@RequestBody UserEntity userEntity) {
         try {
@@ -23,7 +24,6 @@ public class UserController {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
-
     @GetMapping("/")
     public ResponseEntity getUsers() {
         try {
@@ -33,7 +33,7 @@ public class UserController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity getOneUser(@PathVariable(name = "id") Long id) {
+    public ResponseEntity getOneUser(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(userService.getOne(id));
         } catch (UserNotFoundException e) {
@@ -42,16 +42,14 @@ public class UserController {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
-
     @GetMapping("/{userId}/todos")
-    public ResponseEntity getTodosByUserId(@PathVariable(name = "userId") Long userId) {
+    public ResponseEntity getTodosByUserId(@PathVariable Long userId) {
         try {
             return ResponseEntity.ok(userService.getTodosByUserId(userId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         try {

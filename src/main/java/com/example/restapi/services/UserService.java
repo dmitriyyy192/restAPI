@@ -51,15 +51,24 @@ public class UserService {
         return userTodosDTO;
     }
 
-    public Long deleteUser(Long id) {
+    public User deleteUser(Long id) throws UserNotFoundException {
         UserEntity user = userRepository.findById(id).get();
-        List<TodoEntity> userTodos = user.getTodos();
-        userTodos.forEach(todo -> {
-            List<UserEntity> todoUsers = todo.getUsers();
-            todoUsers.remove(user.getId());
-            todo.setUsers(todoUsers);
+        if (user == null) {
+            throw new UserNotFoundException("Пользователь не найден!");
+        }
+        List<Long> todosIdForRemove = new ArrayList<>();
+        user.getTodos().forEach(todo -> {
+            todo.getUsers().remove(user);
+            if (todo.getUsers().size() == 0) {
+                todosIdForRemove.add(todo.getId());
+            }
         });
-        userRepository.deleteById(user.getId());
-        return id;
+
+        todosIdForRemove.forEach(todoId -> todoRepository.deleteById(todoId));
+
+        User removedUser = User.toModel(userRepository.findById(id).get());
+        userRepository.deleteById(id);
+
+        return removedUser;
     }
 }
