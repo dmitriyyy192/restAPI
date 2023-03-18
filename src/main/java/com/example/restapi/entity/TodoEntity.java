@@ -2,6 +2,7 @@ package com.example.restapi.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,8 +14,9 @@ public class TodoEntity {
     private Long id;
     private String title;
     private Boolean completed;
+
     @ManyToMany(mappedBy = "todos", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<UserEntity> users;
+    private List<UserEntity> users = new ArrayList<>();
 
     public TodoEntity() {
     }
@@ -43,11 +45,11 @@ public class TodoEntity {
         this.completed = completed;
     }
 
-    public Set<UserEntity> getUsers() {
+    public List<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<UserEntity> users) {
+    public void setUsers(List<UserEntity> users) {
         this.users = users;
     }
 }

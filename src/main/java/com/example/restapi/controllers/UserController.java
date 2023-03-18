@@ -16,8 +16,7 @@ public class UserController {
     @PostMapping("/")
     public ResponseEntity registration(@RequestBody UserEntity userEntity) {
         try {
-            userService.registration(userEntity);
-            return ResponseEntity.ok("Пользователь успешно сохранен!");
+            return ResponseEntity.ok().body(userService.registration(userEntity));
         } catch (UserAlreadyExistException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -34,7 +33,7 @@ public class UserController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity getOneUsers(@RequestParam("id") Long id) {
+    public ResponseEntity getOneUser(@PathVariable(name = "id") Long id) {
         try {
             return ResponseEntity.ok(userService.getOne(id));
         } catch (UserNotFoundException e) {
@@ -45,7 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/todos")
-    public ResponseEntity getTodosByUserId(@RequestParam Long userId) {
+    public ResponseEntity getTodosByUserId(@PathVariable(name = "userId") Long userId) {
         try {
             return ResponseEntity.ok(userService.getTodosByUserId(userId));
         } catch (Exception e) {

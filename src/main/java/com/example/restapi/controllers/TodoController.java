@@ -13,8 +13,16 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @PostMapping("/{userId}")
-    public ResponseEntity createTodo(@RequestParam("userId") Long userId, @RequestBody TodoEntity todoEntity) {
+    @GetMapping("/")
+    public ResponseEntity getTodos() {
+        try {
+            return ResponseEntity.ok().body(todoService.getTodos());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Не удалось получить тудушки");
+        }
+    }
+    @PostMapping()
+    public ResponseEntity createTodo(@RequestParam(name = "userId") Long userId, @RequestBody TodoEntity todoEntity) {
         try{
             return ResponseEntity.ok(todoService.createTodo(todoEntity, userId));
         } catch (Exception e) {
@@ -22,13 +30,14 @@ public class TodoController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity completeTodo(@RequestParam Long id) {
+
+
+    @PutMapping()
+    public ResponseEntity completeTodo(@RequestParam(name = "id") Long id) {
         try{
             return ResponseEntity.ok(todoService.completeTodo(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка!");
         }
     }
-
 }

@@ -2,6 +2,7 @@ package com.example.restapi.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,16 +21,16 @@ public class UserEntity {
             inverseJoinColumns = {@JoinColumn(name = "todo_id")}
     )
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<TodoEntity> todos;
+    private List<TodoEntity> todos = new ArrayList<>();
 
     public UserEntity() {
     }
 
-    public Set<TodoEntity> getTodos() {
+    public List<TodoEntity> getTodos() {
         return todos;
     }
 
-    public void setTodos(Set<TodoEntity> todos) {
+    public void setTodos(List<TodoEntity> todos) {
         this.todos = todos;
     }
 
