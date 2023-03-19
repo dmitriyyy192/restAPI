@@ -3,7 +3,9 @@ package com.example.restapi.controllers;
 import com.example.restapi.entity.UserEntity;
 import com.example.restapi.exception.UserAlreadyExistException;
 import com.example.restapi.exception.UserNotFoundException;
+import com.example.restapi.models.User;
 import com.example.restapi.services.UserService;
+import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,16 @@ public class UserController {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity updateUsernameById(@RequestBody UserEntity user, @PathVariable Long userId) {
+        try {
+            return ResponseEntity.ok(userService.updateUsernameById(user, userId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Произошла ошибка");
+        }
+    }
+
     @GetMapping("/")
     public ResponseEntity getUsers() {
         try {

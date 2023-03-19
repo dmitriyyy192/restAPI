@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Table(name = "users")
 @Entity //чтобы jpa сделал из этой сущности таблицу
@@ -55,5 +54,15 @@ public class UserEntity {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", todos=" + todos +
+                '}';
     }
 }

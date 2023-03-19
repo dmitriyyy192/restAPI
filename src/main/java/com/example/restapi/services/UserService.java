@@ -30,6 +30,22 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateUsernameById(UserEntity updateUser, Long userId) {
+        UserEntity user = userRepository.findById(userId).get();
+
+        System.out.println(updateUser.toString());
+
+        if(!(updateUser.getTodos().size() == 0)) {
+            user.setTodos(updateUser.getTodos());
+        }
+        if(updateUser.getUsername() != null) {
+            user.setUsername(updateUser.getUsername());
+        }
+        if(updateUser.getPassword() != null) {
+            user.setPassword(updateUser.getPassword());
+        }
+        return User.toModel(userRepository.save(user));
+    }
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         userRepository.findAll().forEach(el -> users.add(User.toModel(el)));
