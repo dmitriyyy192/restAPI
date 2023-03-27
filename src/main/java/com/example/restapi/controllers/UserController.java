@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.MissingFormatArgumentException;
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -46,13 +49,7 @@ public class UserController {
     }
     @GetMapping("/{id}")
     public ResponseEntity getOneUser(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(userService.getOne(id));
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Произошла ошибка");
-        }
+        return ResponseEntity.ok(userService.getOne(id));
     }
     @GetMapping("/{userId}/todos")
     public ResponseEntity getTodosByUserId(@PathVariable Long userId) {
@@ -70,4 +67,10 @@ public class UserController {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
+
+    @ExceptionHandler({NoSuchElementException.class, MissingFormatArgumentException.class})
+    public ResponseEntity message(Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
 }
